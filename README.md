@@ -1,3 +1,5 @@
+# Description
+
 ### Problem:
 
 After the transition to online learning due to COVID-19, a lot of lower income schools, particularly middle and high schools, have been impacted negatively largely due to not having a set online platform for students. These schools particularly can not afford specific platforms like Blackboard or Canvas. So, schools have been using emails, zoom, Microsoft Teams etc to make up for this, however, these come with their own set of issues such as not being personalized to a school, technical problems/difficulties etc.
@@ -48,3 +50,30 @@ Three types of users:
 **(Potential) Third stage**
 
 1. Built in video platform linked with discussion board
+
+# How to run Developer environment
+
+## Prequisites
+
+Install these dependencies
+
+- Docker
+- Node.js + NPM
+- Python 3
+
+## Running a development build
+
+Use `docker-compose up -d` to start the docker image.
+
+To access the front end go to localhost:3000. Changes should automatically hot reload when you update the code.
+
+Before accessing the API we need to create a non root user for the MongoDB database:
+
+```
+docker exec -it mongo bash
+mongo -u admin -p
+use webapp
+db.createUser({user: 'apiuser', pwd: 'apipassword', roles: [{role: 'readWrite', db: 'webapp'}]})
+```
+
+Then to access the backend boilerplate API go to localhost:5000/api.

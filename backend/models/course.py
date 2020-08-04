@@ -1,11 +1,6 @@
-#import sys
-#import os
 import datetime
 from app import db 
-#from course_model import Course 
 from flask import Blueprint, Response
-
-#sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "../")))
 
 class Course(db.Document):
     course_id = db.IntField()

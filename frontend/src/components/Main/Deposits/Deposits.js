@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Deposit from './Deposit'
-import AllDepositsBtn from '../AllDepositsBtn'
 import CourseCard from '../CourseCard'
+import AllDepositsBtn from '../AllDepositsBtn'
 const Container = styled.div`
 
 `
@@ -36,7 +36,7 @@ const Deposits = ({ title, data, count }) => {
         <Container>
             <Title>{title}<DepositsCount>{count}</DepositsCount></Title>
             {data.map(currentCourses => (
-                <Deposit data={currentCourses} key={currentCourses} />
+                <CourseCard data={currentCourses} key={currentCourses} />
             ))}
             <AllDepositsBtn title={title} />
         </Container>

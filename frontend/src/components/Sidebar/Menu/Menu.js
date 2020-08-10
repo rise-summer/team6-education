@@ -1,6 +1,10 @@
 import React from 'react'
 import MenuLink from './MenuLink'
 import styled from 'styled-components'
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import FolderIcon from '@material-ui/icons/Folder';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 
 const Container = styled.div`
@@ -11,10 +15,10 @@ const Container = styled.div`
 const Menu = () => {
     return (
         <Container>
-            <MenuLink title="Overview" icon={'home'}/>
-            <MenuLink title="Courses" icon={'file-multiple'} active />
-            <MenuLink title="Grades" icon={'gift'}/>
-            <MenuLink title="Settings" icon={'cog'} />
+            <MenuLink title={<DashboardIcon/>}/>
+            <MenuLink title={<FolderIcon/>}active />
+            <MenuLink title={<CalendarTodayIcon/>}/>
+            <MenuLink title={<FileCopyIcon/>}/>
         </Container>
     )
 }

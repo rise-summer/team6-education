@@ -3,7 +3,7 @@ const globalTheme = {
     switchHeight: '20px',
     switchPadding: '3px',
     colorContrastLow: '#d3d3d4',
-    colorWhite: '#FFF',
+    colorWhite: '#FFFFFF',
     switchColorPrimary: '#302C40',
     switchAnimationDuration: '0.2s',
     gradient: 'linear-gradient(122deg, rgba(128,74,216,1) 0%, rgba(98,75,217,1) 100%)',
@@ -13,12 +13,12 @@ const globalTheme = {
 
 
 export const lightTheme = {
-    primary: '#FFF',
+    primary: '#E5E5E5',
     secondary: '#F8F8F8',
     textColor: '#585280',
     header: '#585280',
-    headerNumber: '#FFF',
-    activeMenu: '#585280',
+    headerNumber: '#FFFFFF',
+    activeMenu: '#66C500',
     ...globalTheme
 }
 

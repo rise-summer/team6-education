@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import SearchBar from './SearchBar'
 // import ProfileImage from '../../assets/images/profilelg.png'
 
 const Container = styled.div`
@@ -33,9 +34,9 @@ const NotificationsIcon = styled.span`
 const Nav = () => {
     return (
         <Container>
-            <NotificationsIcon>  <NotificationsActiveIcon/>   </NotificationsIcon>
-            
-            <ProfileImg src={require('../../assets/images/prof-pic.png')} />
+
+            <SearchBar/>
+  
         </Container>
     )
 }

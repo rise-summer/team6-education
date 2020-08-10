@@ -6,17 +6,29 @@
             ],
             "course": [
                 "Math"
+            ],
+            "teacher": [
+                "Harry Potter"
             ]
         }
 
     ],
     "nonstarred": [
         {
-            "user": "Celia Zhou",
-            "currentCourses": "Math"
+            "user": [
+                "Celia Zhou"
+            ],
+            "course": [
+                "Math"
+            ]
         },
         {
-
+            "user": [
+                "Celia Zhou"
+            ],
+            "course": [
+                "Math"
+            ]
         }
     ]
 }

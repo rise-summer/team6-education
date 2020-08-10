@@ -8,13 +8,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import StarIcon from '@material-ui/icons/Star';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import styled from 'styled-components'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
     padding: 10,
     margin: 10,
+    display: 'inline-block'
   },
   media: {
     height: 0,
@@ -35,32 +37,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Text = styled.h1`
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.textColor};
+    margin: 0;
+`
+
 
 export default function CourseCard({ data }) {
   const classes = useStyles();
-  const { user, course } = data;
+  const { user, course, teacher } = data;
 
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        title={course}
+        title={<Text>{course}</Text>}
 
         avatar={
           <IconButton>
           <StarIcon />
         </IconButton>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+
         
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        
+            <Text>
+              {teacher}
+            </Text>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

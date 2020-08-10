@@ -9,33 +9,18 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import StarIcon from '@material-ui/icons/Star';
 import styled from 'styled-components'
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
-    padding: 10,
-    margin: 10,
-    display: 'inline-block'
+    maxWidth: 345,
+    margin: 10
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
+});
 
 const Text = styled.h1`
     font-size: 0.8rem;
@@ -52,17 +37,33 @@ export default function CourseCard({ data }) {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        title={<Text>{course}</Text>}
-
-        avatar={
-          <IconButton>
-          <StarIcon />
-        </IconButton>
-        }
-
         
-      />
+        <CardMedia
+          color="red"
+        />
+        <CardContent>
+          
+          <Typography gutterBottom variant="h5" component="h2">
+            {course}
+              <Button style = {{'float': 'right'}}>
+                <MoreVertIcon/>
+              </Button>
+             
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {teacher}
+          </Typography>
+        </CardContent>
+     
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
+
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
             <Text>
@@ -70,10 +71,8 @@ export default function CourseCard({ data }) {
             </Text>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-     
 
-      </CardActions>
+   
 
     </Card>
   );

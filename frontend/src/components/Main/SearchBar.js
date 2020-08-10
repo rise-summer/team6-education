@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
-    height: '100%',
     position: 'absolute',
+    height: '100%',
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -161,13 +161,13 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar style={{ background: '#FFFFFF', color: '#C5C7CD', margin: '0px' }}>
+      <AppBar elevation = {0} style={{ background: '#FFFFFF', color: '#C5C7CD' }}>
         <Toolbar>
             
    
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon/>
             </div>
             <InputBase
               placeholder="Search…"

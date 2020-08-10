@@ -13,7 +13,7 @@ const Title = styled.h1`
     align-items: center;
 `
 
-const DepositsCount = styled.div`
+const CoursesCount = styled.div`
     margin-left: 1rem;
     font-size: 1rem;
     background-color: ${({ theme }) => theme.header};
@@ -28,11 +28,11 @@ const DepositsCount = styled.div`
 
 
 
-const Deposits = ({ title, data, count }) => {
+const Courses = ({ title, data, count }) => {
 
     return (
         <Container>
-            <Title>{title}<DepositsCount>{count}</DepositsCount></Title>
+            <Title>{title}<CoursesCount>{count}</CoursesCount></Title>
             {data.map(course => (
                 <CourseCard data={course} key={course.user.teacher} />
             ))}
@@ -41,4 +41,4 @@ const Deposits = ({ title, data, count }) => {
     )
 }
 
-export default Deposits
+export default Courses

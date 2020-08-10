@@ -28,11 +28,11 @@ const AddCircleIcon = styled.span`
 `
 
 
-const NewDepositBtn = () => (
+const NewCourseBtn = () => (
     <AddButton>
         <AddCircleIcon> <AddIcon/> </AddCircleIcon>
     </AddButton>
 )
 
 
-export default NewDepositBtn
+export default NewCourseBtn

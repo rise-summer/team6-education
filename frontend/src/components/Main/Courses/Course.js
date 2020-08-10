@@ -46,7 +46,7 @@ const Text = styled.h1`
 
 
 
-const Deposit = ({ data }) => {
+const Course = ({ data }) => {
     const { user, currentCourses } = data;
     const classes = useStyles();
 
@@ -88,4 +88,4 @@ const Deposit = ({ data }) => {
     )
 }
 
-export default Deposit
+export default Course

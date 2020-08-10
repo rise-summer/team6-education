@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Nav from './Nav'
-import NewDepositBtn from './NewDepositBtn'
-import Deposits from './Deposits/Deposits'
+import NewCourseBtn from './NewCourseBtn'
+import Courses from './Courses/Courses'
 import CourseData from '../../CourseData.json'
 
 const Container = styled.div`
@@ -17,10 +17,9 @@ const Main = () => {
     return (
         <Container>
             <Nav />
-            <NewDepositBtn />
-           
-            <Deposits title="Starred Courses" count={0} data={CourseData.starred} />
-            <Deposits title="Other Courses" count={8} data={CourseData.nonstarred} />
+            <NewCourseBtn />
+            <Courses title="Starred Courses" count={0} data={CourseData.starred} />
+            <Courses title="Other Courses" count={8} data={CourseData.nonstarred} />
         </Container>
     )
 }

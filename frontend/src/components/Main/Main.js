@@ -4,7 +4,6 @@ import Nav from './Nav'
 import NewDepositBtn from './NewDepositBtn'
 import Deposits from './Deposits/Deposits'
 import DepositData from '../../DepositData.json'
-import CourseCard from './CourseCard'
 
 const Container = styled.div`
     margin-left: 16rem;
@@ -19,7 +18,7 @@ const Main = () => {
         <Container>
             <Nav />
             <NewDepositBtn />
-            <CourseCard/>
+           
             <Deposits title="Starred Courses" count={0} data={DepositData.starred} />
             <Deposits title="Other Courses" count={8} data={DepositData.nonstarred} />
         </Container>

@@ -35,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({ data }) {
   const classes = useStyles();
+  const { user, currentCourses } = data;
 
 
   return (
@@ -52,11 +53,11 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title='Math'
+        title={currentCourses}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Teacher, tasks, announcement
+          {user}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

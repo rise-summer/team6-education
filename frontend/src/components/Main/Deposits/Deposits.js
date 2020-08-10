@@ -37,8 +37,8 @@ const Deposits = ({ title, data, count }) => {
         <Container>
             <Title>{title}<DepositsCount>{count}</DepositsCount></Title>
             <CourseCard />
-            {data.map(deposit => (
-                <Deposit data={deposit} key={deposit.property.address.street} />
+            {data.map(currentCourses => (
+                <Deposit data={currentCourses} key={currentCourses} />
             ))}
             <AllDepositsBtn title={title} />
         </Container>

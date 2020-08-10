@@ -7,12 +7,15 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@material-ui/icons/Star';   
 import styled from 'styled-components'
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FolderIcon from '@material-ui/icons/Folder';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+
 
 
 const useStyles = makeStyles({
@@ -54,23 +57,24 @@ export default function CourseCard({ data }) {
             {teacher}
           </Typography>
         </CardContent>
-     
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-            <Text>
-              {teacher}
-            </Text>
+          This Week
+
+          Recently Graded
         </Typography>
       </CardContent>
+     
+      <CardActions style = {{'float': 'right'}}>
+        <Button size="small">
+          <SpellcheckIcon style= {{'color': '#B5B5B9'}}/>
+        </Button>
+        <Button size="small">
+          <FolderIcon style= {{'color': '#B5B5B9'}}/>
+        </Button>
+      </CardActions>
+
 
    
 

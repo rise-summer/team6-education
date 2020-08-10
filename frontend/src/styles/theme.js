@@ -15,7 +15,7 @@ const globalTheme = {
 export const lightTheme = {
     primary: '#E5E5E5',
     secondary: '#FFFFFF',
-    textColor: '#585280',
+    textColor: '#000000',
     header: '#585280',
     headerNumber: '#FFFFFF',
     activeMenu: '#66C500',

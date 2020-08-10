@@ -13,7 +13,8 @@ export const GlobalStyles = createGlobalStyle`
     height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-family: 'Source Sans Pro', sans-serif;
     transition: all 0.25s linear;
 
   }

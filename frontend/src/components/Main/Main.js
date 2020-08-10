@@ -6,7 +6,7 @@ import Courses from './Courses/Courses'
 import CourseData from '../../CourseData.json'
 
 const Container = styled.div`
-    margin-left: 16rem;
+    margin-left: 6rem;
     position: relative;
     padding: 0 4rem;
     
@@ -17,9 +17,9 @@ const Main = () => {
     return (
         <Container>
             <Nav />
-            <NewCourseBtn />
-            <Courses title="Starred Courses" count={0} data={CourseData.starred} />
-            <Courses title="Other Courses" count={8} data={CourseData.nonstarred} />
+
+            <Courses title="Courses" count={3} data={CourseData.starred} />
+            
         </Container>
     )
 }

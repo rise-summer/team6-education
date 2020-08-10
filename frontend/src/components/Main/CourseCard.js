@@ -4,16 +4,17 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarIcon from '@material-ui/icons/Star';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 300,
+    padding: 10,
+    margin: 10,
   },
   media: {
     height: 0,
@@ -35,35 +36,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function RecipeReviewCard({ data }) {
+export default function CourseCard({ data }) {
   const classes = useStyles();
-  const { user, currentCourses } = data;
+  const { user, course } = data;
 
 
   return (
     <Card className={classes.root}>
       <CardHeader
+        title={course}
+
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <IconButton>
+          <StarIcon />
+        </IconButton>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={currentCourses}
+        
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {user}
+        
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+     
 
       </CardActions>
 

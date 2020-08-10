@@ -44,8 +44,6 @@ const Text = styled.h1`
     margin: 0;
 `
 
-
-
 const Course = ({ data }) => {
     const { user, currentCourses } = data;
     const classes = useStyles();

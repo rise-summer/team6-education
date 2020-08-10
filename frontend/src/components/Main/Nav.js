@@ -15,6 +15,7 @@ const ProfileImg = styled.img`
     height: 2rem;
     margin: 0 1rem;
     cursor: pointer;
+    border-radius: 50%;
 `
 /*
 const MessageIcon = styled.span`
@@ -34,7 +35,7 @@ const Nav = () => {
         <Container>
             <NotificationsIcon>  <NotificationsActiveIcon/>   </NotificationsIcon>
             
-            <ProfileImg src={require('../../assets/images/profilelg.png')} />
+            <ProfileImg src={require('../../assets/images/prof-pic.png')} />
         </Container>
     )
 }

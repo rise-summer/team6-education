@@ -27,7 +27,6 @@ const CoursesCount = styled.div`
 `
 
 
-
 const Courses = ({ title, data, count }) => {
 
     return (

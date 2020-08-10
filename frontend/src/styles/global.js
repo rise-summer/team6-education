@@ -15,5 +15,6 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     font-family: 'Roboto', sans-serif;
     transition: all 0.25s linear;
+
   }
 `

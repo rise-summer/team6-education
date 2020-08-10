@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import SortingBar from './SortingBar'
 import Deposit from './Deposit'
 import AllDepositsBtn from '../AllDepositsBtn'
 import CourseCard from '../CourseCard'
@@ -36,7 +35,6 @@ const Deposits = ({ title, data, count }) => {
     return (
         <Container>
             <Title>{title}<DepositsCount>{count}</DepositsCount></Title>
-            <CourseCard />
             {data.map(currentCourses => (
                 <Deposit data={currentCourses} key={currentCourses} />
             ))}

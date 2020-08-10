@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard() {
   const classes = useStyles();
 
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -50,8 +51,7 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Math"
-        subheader="September 14, 2016"
+        title='Math'
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -68,3 +68,4 @@ export default function RecipeReviewCard() {
     </Card>
   );
 }
+

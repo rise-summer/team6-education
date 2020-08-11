@@ -21,7 +21,8 @@ import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    margin: 10
+    margin: 10,
+    borderRadius: 25
   },
 });
 
@@ -40,10 +41,7 @@ export default function CourseCard({ data }) {
 
   return (
     <Card className={classes.root}>
-        
-        <CardMedia
-          color="red"
-        />
+
         <CardContent>
           
           <Typography gutterBottom variant="h5" component="h2">
@@ -56,6 +54,7 @@ export default function CourseCard({ data }) {
           <Typography variant="body2" color="textSecondary" component="p">
             {teacher}
           </Typography>
+
         </CardContent>
 
       <CardContent>

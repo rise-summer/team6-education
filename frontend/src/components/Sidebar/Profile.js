@@ -21,7 +21,7 @@ const Profile = () => {
         <Container>
             <ProfileImg src={Image} />*/
         <Container>
-            <ProfileName>Celia Zhou</ProfileName>
+            <ProfileName></ProfileName>
         </Container>
     )
 }

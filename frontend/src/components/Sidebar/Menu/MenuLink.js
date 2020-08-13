@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 
 const Container = styled.div`
-    border-left: 3px solid ${props => props.active ? props.theme.activeMenu : "transparent"};
+    border-left: 3px solid #66C500 ${props => props.active ? props.theme.activeMenu : "transparent"};
     width: 100%;
     padding: 0.3rem;
     padding-left: 2rem;
@@ -22,8 +22,8 @@ const Container = styled.div`
 
 
 const Span = styled.span`
-    /* color: ${props => props.active ? props.theme.activeMenu : "#AAA5A5"}; */
-    color: ${props => !props.active && props.theme.textColor};
+    color: ${props => props.active ? props.activeMenu : "#B5B5B9"}; 
+    color: "#AAA5A5";
     font-size: 1rem;
     margin-right: 1rem;
 `
@@ -31,7 +31,8 @@ const Span = styled.span`
 const Title = styled.h1`
     font-size: 0.9rem;
     font-weight: 300;
-    color: ${props => props.active ? props.theme.activeMenu : "#AAA5A5"};
+    color: #66C500;
+    color: ${props => props.active ? props.theme.activeMenu : "#B5B5B9"};
 `
 
 const MenuLink = ({ title, active, icon }) => {

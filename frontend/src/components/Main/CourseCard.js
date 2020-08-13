@@ -20,39 +20,42 @@ import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 355,
     margin: 10,
     borderRadius: 25
   },
 });
 
-const Text = styled.h1`
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: ${({ theme }) => theme.textColor};
-    margin: 0;
+const Course = styled.h1`
+    font-size: 1.5rem;
+    font-family: HelveticaNeue;
+`
+
+const Teacher = styled.h1`
+    font-size: 1rem;
+    font-family: HelveticaNeue;
 `
 
 
 export default function CourseCard({ data }) {
   const classes = useStyles();
-  const { user, course, teacher } = data;
+  const { course, teacher } = data;
 
 
   return (
-    <Card className={classes.root}>
+    <Card  className={classes.root}>
 
-        <CardContent>
+        <CardContent style = {{backgroundColor: '#14A4E3'}}>
           
           <Typography gutterBottom variant="h5" component="h2">
-            {course}
+            <Course>{course}</Course>
               <Button style = {{'float': 'right'}}>
                 <MoreVertIcon/>
               </Button>
              
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {teacher}
+            <Teacher>{teacher}</Teacher>
           </Typography>
 
         </CardContent>

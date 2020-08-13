@@ -27,13 +27,15 @@ const CoursesCount = styled.div`
 `
 
 
-const Courses = ({ title, data, count }) => {
+const Courses = ({ title, data}) => {
 
     return (
         <Container>
-            <Title>{title}<CoursesCount>{count}</CoursesCount></Title>
+            <Title>{title}</Title>
             {data.map(course => (
-                <CourseCard data={course} key={course.user.teacher} />
+                <CourseCard 
+                    data={course} 
+                />
             ))}
             
         </Container>

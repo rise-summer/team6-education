@@ -5,7 +5,7 @@ import Profile from './Profile'
 import ToggleSwitch from './ToggleSwitch'
 
 const Container = styled.div`
-    background-color: ${({ theme }) => theme.secondary};
+    background-color: #FFFFFF;
     position: fixed;
     left: 0;
     top: 0;
@@ -24,7 +24,7 @@ const Sidebar = () => {
         <Container>
             <Profile />
             <Menu />
-            <ToggleSwitch />
+           
         </Container>
     )
 }

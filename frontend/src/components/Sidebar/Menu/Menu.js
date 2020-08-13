@@ -15,8 +15,8 @@ const Container = styled.div`
 const Menu = () => {
     return (
         <Container>
-            <MenuLink title={<DashboardIcon/>}/>
-            <MenuLink title={<FolderIcon/>}active />
+            <MenuLink title={<DashboardIcon/> }/>
+            <MenuLink title={<FolderIcon/>} active />
             <MenuLink title={<CalendarTodayIcon/>}/>
             <MenuLink title={<FileCopyIcon/>}/>
         </Container>

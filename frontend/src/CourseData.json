@@ -1,37 +1,22 @@
-{
+[
     
-    "starred": [
-        {
-            "user": [
-                "Celia Zhou"
-            ],
-            "course": [
-                "Math"
-            ],
-            "teacher": [
-                "Professor"
-            ]
-      
-        },
-        {
-            "user": [
-                "Celia Zhou"
-            ],
-            "course": [
-                "Math"
-            ]
-        },
-        {
-            "user": [
-                "Celia Zhou"
-            ],
-            "course": [
-                "Math"
-            ]
-        }
+    {
+        "course": "Math",
+        "teacher": "Professor A",
+        "courseId": 1
+    },
 
-    ],
-    "nonstarred": [
+    {
+        "course": "Science",
+        "teacher": "Professor B",
+        "courseId": 2
 
-    ]
-}
+    },
+    
+    {
+        "course": "English",
+        "teacher": "Professor C",
+        "courseId": 3
+    }
+
+]

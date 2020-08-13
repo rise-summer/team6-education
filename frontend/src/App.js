@@ -1,24 +1,52 @@
 import React, { useContext } from 'react'
+import {Component} from 'react'
 import { ThemeProvider } from 'styled-components'
 import Dashboard from './containers/Dashboard'
 import { lightTheme, darkTheme } from './styles/theme'
 import { GlobalStyles } from './styles/global'
 import { ThemeContext } from './context/themeContext'
-
-const App = () => {
-
-  const context = useContext(ThemeContext);
-  const { theme } = context;
+import CourseData from './CourseData.json'
 
 
-  return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <>
-        <GlobalStyles />
-        <Dashboard />
-      </>
-    </ThemeProvider>
-  )
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      loading: false,
+    }
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          loading: true,
+          data: json,
+        })
+      })
+  }
+
+  render() {
+
+    var {loading, data} = this.state;
+
+    if (!loading) {
+      return <div>Loading...</div>
+    } else {
+        return (
+            <>
+              
+              <GlobalStyles />
+              <Dashboard />
+            </>
+        )
+    }
+
+
+  };
+
 }
 
 export default App

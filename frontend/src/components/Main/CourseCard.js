@@ -26,12 +26,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Course = styled.h1`
+const CourseArea = styled.h1`
     font-size: 1.5rem;
     font-family: HelveticaNeue;
 `
 
-const Teacher = styled.h1`
+const TeacherArea = styled.h1`
     font-size: 1rem;
     font-family: HelveticaNeue;
 `
@@ -48,14 +48,14 @@ export default function CourseCard({ data }) {
         <CardContent style = {{backgroundColor: '#14A4E3'}}>
           
           <Typography gutterBottom variant="h5" component="h2">
-            <Course>{course}</Course>
+            <CourseArea>{course}</CourseArea>
               <Button style = {{'float': 'right'}}>
                 <MoreVertIcon/>
               </Button>
              
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            <Teacher>{teacher}</Teacher>
+            <TeacherArea>{teacher}</TeacherArea>
           </Typography>
 
         </CardContent>

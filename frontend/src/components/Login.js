@@ -10,7 +10,7 @@ const SignIn = (props) => {
 
     return (
         <div>
-            <h1>Sign in</h1>
+            <h1>Log in</h1>
 
             <button onClick={() => handleLogin()}>Click here to log in</button>
         </div>

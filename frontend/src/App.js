@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from './styles/theme'
 import { GlobalStyles } from './styles/global'
 import { ThemeContext } from './context/themeContext'
 import CourseData from './CourseData.json'
-import SignIn from './components/SignIn';
+import Login from './components/Login';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import Home from './components/Home';
 import PublicRoute from './components/Routes/PublicRoute';
@@ -48,7 +48,7 @@ class App extends Component {
               <BrowserRouter>
                 <Switch>
                   <PublicRoute restricted={false} component={Home} path="/" exact />
-                  <PublicRoute restricted={true} component={SignIn} path="/signin" exact />
+                  <PublicRoute restricted={true} component={Login} path="/login" exact />
                   <PrivateRoute component={Dashboard} path="/dashboard" exact />
                 </Switch>
               </BrowserRouter>

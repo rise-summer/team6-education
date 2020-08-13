@@ -22,11 +22,11 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Home</h1>
+                <h1>Home Page</h1>
 
                 {this.state.isLogin ? 
                     <button onClick={() => this.handleLogout()}>Click here to log out</button>
-                    : <Link to="/signin">Go to sign in page</Link>
+                    : <Link to="/login">Go to the login page</Link>
                 }
             </div>
         );

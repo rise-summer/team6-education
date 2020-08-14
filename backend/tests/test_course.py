@@ -109,3 +109,117 @@ def test_delete_course(client):
     assert response.status_code == 404
 
     Course.objects.delete()
+
+def test_update_course(client):
+    Course.objects().delete()
+    
+    title1 = "Introduction to Biology"
+    title2 = "Introduction to Physics"
+    description = "Newton's Laws of Motion"
+
+    client.post("/api/class/add", json={
+        "course_id": 20000,
+        "title": title1, 
+        "description": "",
+        "instructor": 500,
+        "start_date": "2016-09-01",
+        "end_date": "2016-12-01"
+    })
+
+    r = client.get("/api/class/20000")
+    assert r.get_json()["title"] == title1
+
+    r = client.post("/api/class/update/20000", 
+            json={"title": title2, "description": description})
+    assert r.status_code == 200
+
+    r = client.get("/api/class/20000")
+    course = r.get_json()
+    assert course["title"] == title2
+    assert course["description"] == description
+
+    r = client.post("/api/class/update/10000", json={"title": title1})
+    assert r.status_code == 404
+
+    Course.objects().delete()
+
+def test_add_course_announcement(client):
+    Course.objects().delete()
+
+    client.post("/api/class/add", json={
+        "course_id": 20000,
+        "title": "Introduction to Computers",
+        "description": "",
+        "instructor": 500,
+        "start_date": "2016-09-01",
+        "end_date": "2016-12-01"
+    })
+
+    text = "Welcome to the course ABC!"
+    text2 = "Welcome to the course XYZ!"
+
+    response = client.post("/api/class/20000/announcement/add", 
+                           json={"text": text})
+    assert response.status_code == 200
+    
+    response = client.post("/api/class/20000/announcement/add", 
+                           json={"text": text2})
+    assert response.status_code == 200
+
+    response = client.get("/api/class/20000")
+    assert text == response.get_json()['announcements'][0]['text']    
+    assert text2 == response.get_json()['announcements'][1]['text']
+    
+    response = client.post("/api/class/10000/announcement/add",
+                           json={"text": text})
+    assert response.status_code == 404
+
+    Course.objects().delete()
+
+def test_delete_course_announcement(client):
+    Course.objects().delete()
+
+    client.post("/api/class/add", json={
+        "course_id": 20000,
+        "title": "Introduction to Computers",
+        "description": "",
+        "instructor": 500,
+        "start_date": "2016-09-01",
+        "end_date": "2016-12-01"
+    })
+    
+    msgs = ["This is an easy class.",
+            "This class is tough.",
+            "This is an OK class.",
+            "This class is taught by Mr. Musk."]
+
+    for m in msgs:
+        client.post("/api/class/20000/announcement/add", 
+                    json={"text": m})
+    
+    r = client.get("/api/class/20000/announcement/delete/4")
+    assert r.status_code == 404
+
+    r = client.get("/api/class/20000/announcement/delete/2")
+    assert r.status_code == 200
+
+    r = client.get("/api/class/20000")
+    announcements = r.get_json()["announcements"]
+    assert len(announcements) == 3
+    assert announcements[0]["text"] == msgs[0]
+    assert announcements[1]["text"] == msgs[1]
+    assert announcements[2]["text"] == msgs[3]
+
+    r = client.get("/api/class/20000/announcement/delete/0")
+    assert r.status_code == 200
+
+    r = client.get("/api/class/20000/announcement/delete/0")
+    assert r.status_code == 200
+
+    r = client.get("/api/class/20000")
+    assert r.get_json()["announcements"][0]["text"] == msgs[3]
+
+    r = client.get("/api/class/10000/announcement/delete/10")
+    assert r.status_code == 404
+
+    Course.objects().delete()

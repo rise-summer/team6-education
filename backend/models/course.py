@@ -3,6 +3,10 @@ from random import randint
 from app import db 
 from flask import Blueprint, Response, request, jsonify
 
+class Announcement(db.EmbeddedDocument):
+    text = db.StringField(required=True)
+    date = db.DateTimeField(default=datetime.now())
+
 class Course(db.Document):
     """Modeling of a course object. 
 
@@ -33,6 +37,7 @@ class Course(db.Document):
     start_date = db.DateTimeField(required=True)
     end_date = db.DateTimeField(required=True)
     recurring = db.BooleanField(required=True)
+    announcements = db.ListField(db.EmbeddedDocumentField(Announcement))
 
 course_api = Blueprint("course_api", __name__)
 
@@ -82,7 +87,8 @@ def add_course():
               "instructor": data.get('instructor', None),
               "prerequisites": data.get('prerequisites', []),
               "enrolled_students": data.get('enrolled_students', []),
-              "recurring": data.get('recurring', False)}
+              "recurring": data.get('recurring', False),
+              "announcements": data.get('announcements', [])}
 
     start_date = data.get('start_date', None)
     end_date = data.get('end_date', None)
@@ -128,6 +134,62 @@ def delete_course(course_id):
         course = Course.objects.get(course_id=course_id)
         course.delete()
         return jsonify({"error": 0, 
-                     "msg": "Successfully removed the course."}), 200
+            "msg": "Successfully removed the course."}), 200
     except Course.DoesNotExist:
         return Response("Course does not exist.", status=404)
+
+@course_api.route("/api/class/update/<int:course_id>", methods=["POST"])
+def update_course(course_id):
+    """Updating a course by given course id.
+
+    course_id:  integer
+    """
+
+    try:
+        data = request.get_json()
+        course = Course.objects.get(course_id=course_id)
+        course.update(**data)
+        return jsonify({"error": 0, 
+            "msg": "Successfully updated the course."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)
+
+@course_api.route("/api/class/<int:course_id>/announcement/add", methods=["POST"])
+def add_course_announcement(course_id):
+    """Adding an announcement by given course id.
+    
+    course_id:  integer
+    text:       string
+    """
+
+    try:
+        data = request.get_json()
+        a = Announcement(text=data.get('text', ''))
+        course = Course.objects().get(course_id=course_id)
+        course.announcements.append(a)
+        course.save()
+        return jsonify({"error": 0, 
+            "msg": "Successfully added the announcement."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404) 
+
+@course_api.route("/api/class/<int:course_id>/announcement/delete/<int:a_id>", methods=["GET"])
+def delete_course_announcement(course_id, a_id):
+    """Removing an announcement by given course id and
+    announcement id
+   
+    course_id:  integer
+    a_id:       integer, have the same order as the list of announcements
+                stored at a Course object
+    """
+
+    try:
+        course = Course.objects().get(course_id=course_id)
+        course.announcements.pop(a_id)
+        course.save()
+        return jsonify({"error": 0, 
+            "msg": "Successfully added the announcement."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404) 
+    except IndexError:
+        return Response("Invalid announcement id.", status=404) 

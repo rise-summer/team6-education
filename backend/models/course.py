@@ -22,6 +22,7 @@ class Course(db.Document):
     start_date:         datetime 
     end_date:           datetime
     recurring:          boolean, is a recurring course (or not)
+    announcements:      list of announcements
     """
 
     course_id = db.IntField(required=True)
@@ -41,6 +42,13 @@ class Course(db.Document):
 
 course_api = Blueprint("course_api", __name__)
 
+@course_api.route("/api/class", methods=["GET"])
+def get_courses():
+    """Get all courses."""
+    courses = [{"course_id": c["course_id"],
+        "title": c["title"]} for c in Course.objects()]
+    return jsonify(courses), 200
+
 @course_api.route("/api/class/<int:course_id>", methods=["GET"])
 def get_course(course_id):
     """Request for information of a course.
@@ -59,7 +67,7 @@ def get_course(course_id):
         return Response(course.to_json(), mimetype="application/json",
                         status=200)
     except Course.DoesNotExist:
-        return Response("Class does not exist", status=404)
+        return Response("Class does not exist.", status=404)
 
 @course_api.route("/api/class/add", methods=["POST"])
 def add_course():
@@ -151,6 +159,20 @@ def update_course(course_id):
         course.update(**data)
         return jsonify({"error": 0, 
             "msg": "Successfully updated the course."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)
+
+@course_api.route("/api/class/<int:course_id>/announcement", methods=["GET"])
+def get_course_announcement(course_id):
+    """Getting all announcements by given course id.
+
+    course_id: integer
+    """
+    
+    try:
+        course = Course.objects.get(course_id=course_id)
+        return jsonify({"course_id": course_id, 
+            "announcements": course["announcements"]}), 200
     except Course.DoesNotExist:
         return Response("Course does not exist.", status=404)
 

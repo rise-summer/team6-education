@@ -1,7 +1,8 @@
 import datetime
 import os
 import sys
- 
+
+import pymongo
 from flask import Flask, Response, request
 from flask_mongoengine import MongoEngine
 
@@ -15,6 +16,12 @@ app.config['MONGODB_SETTINGS'] = {
 
 db = MongoEngine()
 db.init_app(app)
+try:
+    db.get_db()
+except pymongo.errors.OperationFailure as e:
+    print(e)
+    sys.exit(-1)
+
 
 from models.course import course_api 
 app.register_blueprint(course_api)

@@ -281,3 +281,63 @@ def test_get_course_announcements(client):
     r = client.get("/api/class/20000/announcement")
     assert r.status_code == 200
     assert msgs == [a["text"] for a in r.get_json()["announcements"]]
+
+def test_enroll_student(client):
+    Course.objects().delete()
+
+    client.post("/api/class/add", json={
+        "course_id": 20000,
+        "title": "Introduction to Computers",
+        "description": "",
+        "instructor": 500,
+        "start_date": "2016-09-01",
+        "end_date": "2016-12-01"
+    })
+
+    r = client.get("/api/class/20000/enroll/100")
+    assert r.status_code == 200
+    assert r.get_json()["error"] == 0
+
+    r = client.get("/api/class/20000") 
+    assert r.get_json()["enrolled_students"] == [100]
+
+    r = client.get("/api/class/20000/enroll/100")
+    assert r.status_code == 200
+    assert r.get_json()["error"] == 1
+    
+    r = client.get("/api/class/20000")
+    assert r.get_json()["enrolled_students"] == [100]
+    
+    r = client.get("/api/class/10000/enroll/100")
+    assert r.status_code == 404
+
+    Course.objects().delete()
+
+def test_drop_student(client):
+    Course.objects().delete()
+
+    client.post("/api/class/add", json={
+        "course_id": 20000,
+        "title": "Introduction to Computers",
+        "description": "",
+        "instructor": 500,
+        "start_date": "2016-09-01",
+        "end_date": "2016-12-01"
+    })
+
+    r = client.get("/api/class/20000/drop/100")
+    assert r.status_code == 200
+    assert r.get_json()["error"] == 1
+
+    client.get("/api/class/20000/enroll/100")
+    r = client.get("/api/class/20000/drop/100")
+    assert r.status_code == 200
+    assert r.get_json()["error"] == 0
+    
+    r = client.get("/api/class/20000")
+    assert r.get_json()["enrolled_students"] == []
+
+    r = client.get("/api/class/10000/drop/100")
+    assert r.status_code == 404
+    
+    Course.objects().delete()

@@ -198,7 +198,7 @@ def add_course_announcement(course_id):
 @course_api.route("/api/class/<int:course_id>/announcement/delete/<int:a_id>", methods=["GET"])
 def delete_course_announcement(course_id, a_id):
     """Removing an announcement by given course id and
-    announcement id
+    announcement id.
    
     course_id:  integer
     a_id:       integer, have the same order as the list of announcements
@@ -215,3 +215,45 @@ def delete_course_announcement(course_id, a_id):
         return Response("Course does not exist.", status=404) 
     except IndexError:
         return Response("Invalid announcement id.", status=404) 
+
+@course_api.route("/api/class/<int:course_id>/enroll/<int:user_id>", methods=["GET"])
+def enroll_student(course_id, user_id):
+    """Adding a student to an existing course.
+    
+    course_id:  integer
+    user_id:    integer
+    """
+    
+    try:
+        course = Course.objects().get(course_id=course_id)
+        if user_id in course.enrolled_students:
+            return jsonify({"error": 1,
+                "msg": "Student already enrolled!"}), 200
+        else:
+            course.enrolled_students.append(user_id)
+            course.save()
+            return jsonify({"error": 0,
+                "msg": "Successfully enrolled student."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)
+
+@course_api.route("/api/class/<int:course_id>/drop/<int:user_id>", methods=["GET"])
+def drop_student(course_id, user_id):
+    """Dropping a student from an existing course.
+   
+    course_id:  integer
+    user_id:    integer
+    """
+
+    try:
+        course = Course.objects().get(course_id=course_id)
+        if not user_id in course.enrolled_students:
+            return jsonify({"error": 1,
+                "msg": "Student is not enrolled!"}), 200
+        else:
+            course.enrolled_students.remove(user_id)
+            course.save()
+            return jsonify({"error": 0,
+                "msg": "Successfully dropped student."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)

@@ -7,20 +7,22 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 'fit-content',
-        padding: '4rem 8.5rem',
+        padding: '5rem 9.5rem',
         border: '1px #B3B2B2 solid',
         textAlign: 'center',
         borderRadius: '20px',
         margin: '0 auto',
         boxShadow: 'none',
+        fontFamily: 'Roboto, sans-serif'
     },
     kumiTitle: {
         fontFamily: 'Roboto, sans-serif',
-        fontWeight: '700',
+        fontWeight: '500',
         fontSize: '70px',
         lineHeight: '70px',
         margin: 0
@@ -74,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         fontSize: '12px',
-        margin: '6px 0px'
+        margin: '9px 0 0'
     },
     rememberMe: {
         position: 'relative',
@@ -92,6 +94,7 @@ export default function LoginCard() {
     const [password, setPassword] = useState("");
     const [remember, setRemember] = useState(false);
     const classes = useStyles();
+    let history = useHistory();
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -129,7 +132,7 @@ export default function LoginCard() {
         <Card className={classes.root}>
             <CardContent>
                 <h3 className={classes.kumiTitle}>Kumi</h3>
-                <p className={classes.headline}>Lorem Ipsum</p>
+                <p className={classes.headline}>Learning</p>
                 <form onSubmit={handleSubmit} id="login-form">
                     <div className={classes.formField}>
                         <label htmlFor="Email" className={classes.labelText}>Email</label>

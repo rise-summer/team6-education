@@ -1,12 +1,17 @@
 import datetime
 import os
-import pymongo
+import sys
+
 from bson import json_util, ObjectId
 import json
 
 from flask import Flask, Response, request, jsonify
 from flask_mongoengine import MongoEngine
+
+import pymongo
 from pymongo import MongoClient
+
+from models.course import course_api 
 
 HOST_NAME = 'localhost'
 
@@ -20,7 +25,13 @@ kumi_mongo_client = MongoClient('localhost', 27017)
 kumi_db = kumi_mongo_client.kumi
 db = MongoEngine()
 db.init_app(app)
+try:
+    db.get_db()
+except pymongo.errors.OperationFailure as e:
+    print(e)
+    sys.exit(-1)
 
+app.register_blueprint(course_api)
 
 # Route to fetch the submissions for a given student and an assignment
 @app.route("/fetchSubmissions", methods=['GET'])

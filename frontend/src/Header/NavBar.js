@@ -1,9 +1,5 @@
 /*
-*   Generic Material UI Nav Bar across top of page for Class Page.
-*       - Has buttons for navigation between class syllabus, 
-*         assignments, and grades for now.
-*       - Assignments button only functional one for now since 
-*         that is the only page ready to be loaded.
+*   Puts together SearchBar.js and Sidebar.js to create the entire NavBar
 *
 */
 
@@ -13,28 +9,76 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import history from '../history';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Hidden from '@material-ui/core/Hidden';
+import PropTypes from 'prop-types';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import FolderIcon from '@material-ui/icons/Folder';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import NoteIcon from '@material-ui/icons/Note';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Menu from './Menu/Menu'
+import Profile from './Profile'
+import PrimarySearchAppBar from '../Header/SearchBar.js';
 
-const useStyles = makeStyles(theme => ({
+  const drawerWidth = 180;
+
+  const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      display: 'flex',
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    appBar: {
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+      },
     },
     menuButton: {
       marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
     },
-    title: {
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    content: {
       flexGrow: 1,
+      padding: theme.spacing(3),
     },
   }));
 
-const NavBar = (props) => {
+function NavBar(props) {
+    const {window} = props;
     const classes = useStyles();
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -44,43 +88,76 @@ const NavBar = (props) => {
         setAnchorEl(null);
     };
 
-    const handleAssignmentClick = () => {
-        history.push("/StudentAssignments");
-        window.location.reload();
-    };
+    const drawer = (
+        <div>
+          <div className={classes.toolbar} />
+          <Divider />
+          <List>
+            <Profile />
+            <Menu />
+          </List>
+          <Divider />
+          <ListItem button edge="end">
+                <ListItemIcon>
+                    <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText>
+                    Settings
+                </ListItemText>
+            </ListItem>
+        </div>
+      );
+
+    const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <div className = {classes.root}>
-            <AppBar position="static">
-        <Toolbar>
-          <IconButton 
-            edge="start" 
-            className={classes.menuButton} 
-            color="inherit" 
-            aria-label="menu" 
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Syllabus</MenuItem>
-            <MenuItem onClick={handleAssignmentClick}>Assignments</MenuItem>
-            <MenuItem onClick={handleClose}>Grades</MenuItem>
-          </Menu>
-          <Typography variant="h6" className={classes.title}>
-            Class
-          </Typography>
-        </Toolbar>
-      </AppBar>
- 
-        </div>
-    )
-};
+        <div className={classes.root}>
+        <CssBaseline />
+        <PrimarySearchAppBar />
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        
+      </div>
+    );
+  }
+  
+ NavBar.propTypes = {
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+  };
+  
+
 
 export default NavBar;

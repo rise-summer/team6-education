@@ -1,0 +1,254 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box !important;
+}
+
+body {
+    background: #F0F0F0 !important;
+	font-family: 'Montserrat', sans-serif !important;
+	height: 100vh !important;
+}
+
+h1 {
+	font-weight: bold !important;
+	margin: 0 !important;
+}
+
+h2 {
+	text-align: center !important;
+}
+
+p {
+	font-size: 14px !important;
+	font-weight: 100 !important;
+	line-height: 20px !important;
+	letter-spacing: 0.5px !important;
+	margin: 20px 0 30px !important;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+span {
+	font-size: 12px !important;
+}
+
+
+button {
+	border-radius: 20px !important;
+	border: 1px solid #FF4B2B !important;
+	background-color: #FF4B2B !important;
+	color: #FFFFFF !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
+	padding: 12px 45px !important;
+	letter-spacing: 1px !important;
+	text-transform: uppercase !important;
+	transition: transform 80ms ease-in !important;
+}
+
+button:active {
+	transform: scale(0.95) !important;
+}
+
+button:focus {
+	outline: none !important;
+}
+
+button.ghost {
+	background-color: transparent !important;
+	border-color: #FFFFFF !important;
+}
+
+form {
+	background-color: #FFFFFF !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-direction: column !important;
+	padding: 0 50px !important;
+	height: 100% !important;
+	text-align: center !important;
+}
+
+input {
+	background-color: #eee !important;
+	border: none !important;
+	padding: 12px 15px !important;
+	margin: 8px 0 !important;
+	width: 100% !important;
+}
+
+.container {
+	margin-top: 90px;
+	background-color: #fff !important;
+	border-radius: 10px !important;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+			0 10px 10px rgba(0,0,0,0.22) !important;
+	position: relative !important;
+	overflow: hidden !important;
+	width: 768px !important;
+	max-width: 100% !important;
+	min-height: 480px !important;
+
+	/* important centering */
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* bring your own prefixes */
+  	transform: translate(-50%, -50%);
+}
+
+.form-container {
+	position: absolute !important;
+	top: 0 !important;
+	height: 100% !important;
+	transition: all 0.6s ease-in-out !important;
+}
+
+.sign-in-container {
+	left: 0 !important;
+	width: 50% !important;
+	z-index: 2 !important;
+}
+
+.container.right-panel-active .sign-in-container {
+	transform: translateX(100%) !important;
+}
+
+.sign-up-container {
+	left: 0 !important;
+	width: 50% !important;
+	opacity: 0 !important;
+	z-index: 1 !important;
+}
+
+.container.right-panel-active .sign-up-container {
+	transform: translateX(100%) !important;
+	opacity: 1 !important;
+	z-index: 5 !important;
+	animation: show 0.6s !important;
+}
+
+@keyframes show {
+	0%, 49.99% {
+		opacity: 0 !important;
+		z-index: 1 !important;
+	}
+	
+	50%, 100% {
+		opacity: 1 !important;
+		z-index: 5 !important;
+	}
+}
+
+.overlay-container {
+	position: absolute !important;
+	top: 0 !important;
+	left: 50% !important;
+	width: 50% !important;
+	height: 100% !important;
+	overflow: hidden !important;
+	transition: transform 0.6s ease-in-out !important;
+	z-index: 100 !important;
+}
+
+.container.right-panel-active .overlay-container{
+	transform: translateX(-100%) !important;
+}
+
+.overlay {
+	background: #044ece !important;
+	background: -webkit-linear-gradient(#044ece, #6c99e8) !important;
+	background: linear-gradient(#044ece, #6c99e8) !important;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-position: 0 0 !important;
+	color: #FFFFFF !important;
+	position: relative !important;
+	left: -100% !important;
+	height: 100% !important;
+	width: 200% !important;
+  	transform: translateX(0) !important;
+	transition: transform 0.6s ease-in-out !important;
+}
+
+.container.right-panel-active .overlay {
+  	transform: translateX(50%) !important;
+}
+
+.overlay-panel {
+	position: absolute !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-direction: column !important;
+	padding: 0 40px !important;
+	text-align: center !important;
+	top: 0 !important;
+	height: 100% !important;
+	width: 50% !important;
+	transform: translateX(0) !important;
+	transition: transform 0.6s ease-in-out !important;
+}
+
+.overlay-left {
+	transform: translateX(-20%) !important;
+}
+
+.container.right-panel-active .overlay-left {
+	transform: translateX(0) !important;
+}
+
+.overlay-right {
+	right: 0 !important;
+	transform: translateX(0) !important;
+}
+
+.container.right-panel-active .overlay-right {
+	transform: translateX(20%) !important;
+}
+
+.social-container {
+	margin: 20px 0 !important;
+}
+
+.social-container a {
+	border: 1px solid #DDDDDD !important;
+	border-radius: 50% !important;
+	display: inline-flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	margin: 0 5px !important;
+	height: 40px !important;
+	width: 40px !important;
+}
+
+footer {
+    background-color: #222 !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    bottom: 0 !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    z-index: 999 !important;
+}
+
+footer p {
+    margin: 10px 0 !important;
+}
+
+footer i {
+    color: red !important;
+}
+
+footer a {
+    color: #3c97bf !important;
+    text-decoration: none !important;
+}
+

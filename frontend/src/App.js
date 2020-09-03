@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch('https://www.postman.com/collections/ee9db4e0292bd64a4326')
       .then(res => res.json())
       .then(json => {
         this.setState({

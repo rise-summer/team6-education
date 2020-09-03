@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import Link from '@material-ui/core/Link';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -72,9 +73,11 @@ export default function CourseCard({ data }) {
         <Button size="small">
           <SpellcheckIcon style= {{'color': '#B5B5B9'}}/>
         </Button>
-        <Button size="small">
-          <FolderIcon style= {{'color': '#B5B5B9'}}/>
-        </Button>
+        <Link href="/ClassPage">
+          <Button size="small">
+            <FolderIcon style= {{'color': '#B5B5B9'}}/>
+          </Button>
+        </Link>
       </CardActions>
 
 
@@ -83,4 +86,3 @@ export default function CourseCard({ data }) {
     </Card>
   );
 }
-

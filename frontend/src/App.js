@@ -9,6 +9,9 @@ import CourseData from './CourseData.json'
 import Login from './view/Login/LoginPage.js';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import Home from './components/Home';
+import Assignment from './Classes/Assignment'
+import StudentAssignments from './Classes/StudentAssignments'
+import ClassPage from './Classes/ClassPage'
 import PublicRoute from './components/Routes/PublicRoute';
 import { BrowserRouter, Switch } from 'react-router-dom';
 
@@ -50,6 +53,9 @@ class App extends Component {
                   <PublicRoute restricted={false} component={Home} path="/" exact />
                   <PublicRoute restricted={true} component={Login} path="/login" exact />
                   <PrivateRoute component={Dashboard} path="/dashboard" exact />
+                  <PrivateRoute exact path="/StudentAssignments" component={StudentAssignments} />
+                  <PrivateRoute exact path="/Assignment" component={Assignment}/>
+                  <PrivateRoute exact path="/ClassPage" component={ClassPage}/>
                 </Switch>
               </BrowserRouter>
             </>
@@ -61,4 +67,3 @@ class App extends Component {
 }
 
 export default App
-

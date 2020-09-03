@@ -1,21 +1,21 @@
 [
     
     {
-        "course": "Math",
-        "teacher": "Professor A",
+        "course": "Algebra 2",
+        "teacher": "Quint, Cynthia",
         "courseId": 1
     },
 
     {
-        "course": "Science",
-        "teacher": "Professor B",
+        "course": "Physics 1",
+        "teacher": "Lyle, Georgia",
         "courseId": 2
 
     },
     
     {
-        "course": "English",
-        "teacher": "Professor C",
+        "course": "Honors English",
+        "teacher": "Hill, Kenneth",
         "courseId": 3
     }
 

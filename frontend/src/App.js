@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch('https://api.github.com/orgs/nodejs')
       .then(res => res.json())
       .then(json => {
         this.setState({

@@ -1,22 +1,13 @@
 import datetime
 import os
 import sys
-
+import json
 from functools import wraps
 
-from bson import json_util, ObjectId
-import json
-
 from flask import Flask, Response, request, jsonify, session, redirect, render_template
-
 from flask_mongoengine import MongoEngine
-import pymongo
 from bson import json_util, ObjectId
-import json
-from pymongo import MongoClient
 from flask_cors import CORS
-# print(sys.path)
-HOST_NAME = 'localhost'
 
 import pymongo
 from pymongo import MongoClient
@@ -122,7 +113,7 @@ def editProfile():
   return render_template('profile.html', user=session['user'])
 
 # Route to fetch the submissions for a given student and an assignment
-@app.route("/api/fetchSubmissions", methods=['GET'])
+@app.route("/fetchSubmissions", methods=['GET'])
 def submission():
     assignmentId = request.args.get('assignId')
     studentId = request.args.get('studentId')
@@ -132,7 +123,7 @@ def submission():
     submission_json = json_util.dumps(submission_cursor_list)
     return submission_json
 
-@app.route("/api/fetchAssignments", methods=['GET'])
+@app.route("/fetchAssignments", methods=['GET'])
 def assignments():
     courseId = request.args.get('courseId')
     assignment_collection = kumi_db.assignments
@@ -141,6 +132,7 @@ def assignments():
     assignment_json = json_util.dumps(assignment_cursor_list)
     return assignment_json
 
-@app.route("/api/uploadAssignment")
+@app.route("/uploadAssignment")
 def upload_assignment():
     return 0
+

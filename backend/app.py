@@ -1,83 +1,138 @@
 import datetime
 import os
-from flask import Flask, Response, request, jsonify
-from flask_mongoengine import MongoEngine
+import sys
+import json
+from functools import wraps
 
+from flask import Flask, Response, request, jsonify, session, redirect, render_template
+from flask_mongoengine import MongoEngine
+from bson import json_util, ObjectId
+from flask_cors import CORS
+
+import pymongo
+from pymongo import MongoClient
+
+HOST_NAME = 'localhost'
 
 app = Flask(__name__)
+CORS(app)
 app.config['MONGODB_SETTINGS'] = {
-    'host': os.environ['MONGODB_HOST'],
-    'username': os.environ['MONGODB_USERNAME'],
-    'password': os.environ['MONGODB_PASSWORD'],
-    'db': 'webapp'
+    'host': '127.0.0.1',
+    'db': 'kumi'
 }
 
+kumi_mongo_client = MongoClient('localhost', 27017)
+kumi_db = kumi_mongo_client.kumi
 db = MongoEngine()
 db.init_app(app)
+try:
+    db.get_db()
+except pymongo.errors.OperationFailure as e:
+    print(e)
+    sys.exit(-1)
 
-class User(db.Document):
-    firstName = db.StringField(max_length=60)
-    lastName = db.StringField(max_length=60)
-    email = db.EmailField()
-    password = db.StringField()
-    phoneNumber = db.StringField()
-    gender = db.StringField()
-    profilePhoto = db.StringField()
-    currentGrade = db.StringField()
-    type =  db.StringField()
-    currentCourses = db.ListField(db.ReferenceField('Course'))
+from models.course import course_api
+app.register_blueprint(course_api)
 
-class Course(db.Document): 
-    # courseId = db.StringField()
-    title = db.StringField()
-    year = db.IntField()
-    description = db.StringField()
-    prerequisites = db.ListField(db.ReferenceField('self'))
-    teacher = db.ReferenceField(User)
-    enrolledStudents = db.ListField(db.ReferenceField('User'))
-    timeAdded = db.DateTimeField()
-    startDate = db.DateTimeField()
-    endDate = db.DateTimeField()
-    recurring = db.BooleanField()
+app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5' # move to different file later
 
-@app.route("/addUser", methods=['POST'])
-def addUser():
-    # User.objects().delete()
-    data= request.get_json()
-    print("Before Inserting, Data: ", data)
-    user = User(
-        firstName=data['firstName'],
-        lastName=data['lastName'],
-        email=data['email'],
-        password=data['password'],
-        phoneNumber=data['phoneNumber'],
-        gender=data['gender'],
-        currentGrade=data['currentGrade'],
-        type=data['type'] ).save()
-    
-    print("After Inserting, user: ", user)
-    # print("To mongo method", todos[0].ref.to_mongo())
-    
-    # print("after querying ref's type is ", todos[0].ref.taskTitle)
-    # return Response(jsonify(todos), mimetype="application/json", status=200)
-    return jsonify(user)
+# Database
+def login_required(f): # call this on any routes that require log in. Todo: make 3 separate versions called Student_Required, Teacher_Required, Admin_Required
+  @wraps(f)
+  def wrap(*args, **kwargs):
+    if 'logged_in' in session:
+      return f(*args, **kwargs)
+    else:
+      return redirect('/auth')
+  
+  return wrap
 
-@app.route("/addCourse", methods=['POST'])
-def addCourse():
-    data = request.get_json()
-    course = Course(
-        title = data['title'],
-        year = data['year'],
-        description = data['description'],
-        teacher = data['teacher']        
-    ).save()
-    return jsonify(course)    
+# Routes
+from user import routes
 
-@app.route("/getCourses/<userId>", methods=['GET'])
-def getCourses(userId):
-    print("user id is ", userId)
-    user = User.objects().only('currentCourses').with_id(userId)
-    return jsonify(user["currentCourses"])
+@app.route('/auth')
+def auth():
+  return render_template('auth.html')
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+@app.route('/')
+@login_required
+def dashboard():
+  session['user'] = kumi_db.users.find_one({ # need to do this every time we the render dashboard to stay updated in case something changes in database, such as another class is added to the student's courselist
+    "_id": session['user']['_id']
+  })
+
+  courseIDs = session['user']['currentCourses']
+  courses = []
+  for courseID in courseIDs:
+      curCourse = kumi_db.courses.find_one({ # need to do this every time we the render dashboard to stay updated in case something changes in database, such as another class is added to the student's courselist
+        "_id": courseID
+      })
+      courses.append(curCourse)
+
+  return render_template('dashboard.html', courses=courses)
+
+
+@app.route('/profile/<uid>')
+def profile(uid):
+
+  user = kumi_db.users.find_one({
+    "_id": uid
+  })
+  return render_template('profile.html', user=user)
+
+#@app.route('/profile/<uid>', methods=['POST'])
+#@login_required
+#def editProfilePicture():
+
+@app.route('/editprofile')
+@login_required
+def editProfileRender():
+
+  return render_template('editProfile.html')
+
+@app.route('/editprofile', methods=['POST'])
+@login_required
+def editProfile():
+
+  kumi_db.users.update_one({"_id": session['user']['_id']},
+    { 
+      "$set": {
+        "profilePhoto": "http://this-or-that.s3.amazonaws.com/" + request.form.get('file_name'),
+        "firstName": request.form.get('firstName'),
+        "lastName": request.form.get('lastName'),
+        "phoneNumber": request.form.get('phoneNumber'),
+        "email": request.form.get('email'),
+        "externalLink": request.form.get('externalLink')
+      }
+    })
+
+  session['user'] = kumi_db.users.find_one({ # need to do this every time we the render dashboard to stay updated in case something changes in database, such as another class is added to the student's courselist
+    "_id": session['user']['_id']
+  })
+
+  return render_template('profile.html', user=session['user'])
+
+# Route to fetch the submissions for a given student and an assignment
+@app.route("/fetchSubmissions", methods=['GET'])
+def submission():
+    assignmentId = request.args.get('assignId')
+    studentId = request.args.get('studentId')
+    submission_collection = kumi_db.submissions
+    submission_cursor = submission_collection.find({'assignId':assignmentId, 'studentId':studentId})
+    submission_cursor_list = list(submission_cursor)
+    submission_json = json_util.dumps(submission_cursor_list)
+    return submission_json
+
+@app.route("/fetchAssignments", methods=['GET'])
+def assignments():
+    courseId = request.args.get('courseId')
+    assignment_collection = kumi_db.assignments
+    assignment_cursor = assignment_collection.find({'courseID':courseId})
+    assignment_cursor_list = list(assignment_cursor)
+    assignment_json = json_util.dumps(assignment_cursor_list)
+    return assignment_json
+
+@app.route("/uploadAssignment")
+def upload_assignment():
+    return 0
+

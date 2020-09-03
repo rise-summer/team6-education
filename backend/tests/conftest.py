@@ -10,3 +10,4 @@ from app import app
 def client():
     """Setting up test client."""
     return app.test_client()
+

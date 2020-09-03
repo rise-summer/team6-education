@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <div class="photoUpload">
+        <form action="http://this-or-that.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+            <div class="col_half">
+                <div class="input_field form_control">
+                    <input type="hidden" name="key" value="${filename}">
+                    <input type="file" name="file" id="fileName" required>
+                </div>
+                <div class="input_field form_control">
+                    <button onclick="getFileName()" type="submit" class="btn btn-success float-right">Upload
+                        Photo</button>
+                </div>
+        </form>
+    </div>
+
+    <form method="POST" action='/editprofile'>
+        <input type="text" name="firstName" placeholder="First Name" value={{session['user']['firstName']}} />
+        <input type="" name="lastName" placeholder="Last Name" value={{session['user']['lastName']}} />
+        <input type="tel" name="phoneNumber" placeholder="Phone Number" value={{session['user']['phoneNumber']}} />
+        <input type="email" name="email" placeholder="Email Address" value={{session['user']['email']}} />
+        <input type="text" name="externalLink" placeholder="External Link" value={{session['user']['externalLink']}} />
+        <input type="hidden" class="form-control" id="fileValue" name="file_name">
+        <button>Edit Profile</button>
+    </form>
+
+    <script>
+        var fileName;
+        function getFileName() {
+            fileName = document.getElementById('fileName').files[0].name;
+            document.getElementById('fileValue').value = fileName;
+        }
+    </script>
+
+    <script src="" async defer></script>
+</body>
+
+</html>

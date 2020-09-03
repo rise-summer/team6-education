@@ -21,6 +21,7 @@ class Course(db.Document):
     start_date:         datetime 
     end_date:           datetime
     recurring:          boolean, is a recurring course (or not)
+    announcements:      list of announcements
     """
 
     course_id = db.IntField(required=True)
@@ -48,6 +49,7 @@ def get_course(course_id):
     
     If the course exists, return a json-encoded string with code 200.
     Otherwise, return an error message with code 404.
+
     Todo's: 
         - Make use of sessions to determine what to return.
     """
@@ -57,7 +59,8 @@ def get_course(course_id):
         return Response(course.to_json(), mimetype="application/json",
                         status=200)
     except Course.DoesNotExist:
-        return Response("Class does not exist", status=404)
+        return Response("Class does not exist.", status=404)
+
 
 @course_api.route("/api/class/add", methods=["POST"])
 def add_course():
@@ -71,6 +74,7 @@ def add_course():
     start_date:         string, datetime formatted
     end_date:           string, datetime formatted
     recurring:          boolean 
+
     Todo's:
         - Check for user permission.
         - Validate the input.
@@ -120,6 +124,7 @@ def add_course():
 @course_api.route("/api/class/delete/<int:course_id>", methods=["GET"])
 def delete_course(course_id):
     """Removing a course by given course id.
+
     course_id:  integer
     
     Todo's: 
@@ -137,6 +142,7 @@ def delete_course(course_id):
 @course_api.route("/api/class/update/<int:course_id>", methods=["POST"])
 def update_course(course_id):
     """Updating a course by given course id.
+
     course_id:  integer
     """
 
@@ -146,6 +152,21 @@ def update_course(course_id):
         course.update(**data)
         return jsonify({"error": 0, 
             "msg": "Successfully updated the course."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)
+
+
+@course_api.route("/api/class/<int:course_id>/announcement", methods=["GET"])
+def get_course_announcement(course_id):
+    """Getting all announcements by given course id.
+
+    course_id: integer
+    """
+    
+    try:
+        course = Course.objects.get(course_id=course_id)
+        return jsonify({"course_id": course_id, 
+            "announcements": course["announcements"]}), 200
     except Course.DoesNotExist:
         return Response("Course does not exist.", status=404)
 
@@ -171,7 +192,7 @@ def add_course_announcement(course_id):
 @course_api.route("/api/class/<int:course_id>/announcement/delete/<int:a_id>", methods=["GET"])
 def delete_course_announcement(course_id, a_id):
     """Removing an announcement by given course id and
-    announcement id
+    announcement id.
    
     course_id:  integer
     a_id:       integer, have the same order as the list of announcements
@@ -188,3 +209,45 @@ def delete_course_announcement(course_id, a_id):
         return Response("Course does not exist.", status=404) 
     except IndexError:
         return Response("Invalid announcement id.", status=404) 
+
+@course_api.route("/api/class/<int:course_id>/enroll/<int:user_id>", methods=["GET"])
+def enroll_student(course_id, user_id):
+    """Adding a student to an existing course.
+    
+    course_id:  integer
+    user_id:    integer
+    """
+    
+    try:
+        course = Course.objects().get(course_id=course_id)
+        if user_id in course.enrolled_students:
+            return jsonify({"error": 1,
+                "msg": "Student already enrolled!"}), 200
+        else:
+            course.enrolled_students.append(user_id)
+            course.save()
+            return jsonify({"error": 0,
+                "msg": "Successfully enrolled student."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)
+
+@course_api.route("/api/class/<int:course_id>/drop/<int:user_id>", methods=["GET"])
+def drop_student(course_id, user_id):
+    """Dropping a student from an existing course.
+   
+    course_id:  integer
+    user_id:    integer
+    """
+
+    try:
+        course = Course.objects().get(course_id=course_id)
+        if not user_id in course.enrolled_students:
+            return jsonify({"error": 1,
+                "msg": "Student is not enrolled!"}), 200
+        else:
+            course.enrolled_students.remove(user_id)
+            course.save()
+            return jsonify({"error": 0,
+                "msg": "Successfully dropped student."}), 200
+    except Course.DoesNotExist:
+        return Response("Course does not exist.", status=404)

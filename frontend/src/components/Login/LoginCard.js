@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
+import { login } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,25 +101,26 @@ export default function LoginCard() {
         event.preventDefault();
         axios.post("/user/login",
             {
-                user: { 
-                    email: email,
-                    password: password
-                }
+                email: email,
+                password: password
             },
                 {withCredentials: true}
             )
             .then(res => {
-                if (res.data.status !== 200) {
+                console.log(res.status);
+                if (res.status !== 200) {
                     alert("Invalid user.");
                 }
                 else {
                     if(remember){
                         // localStorage.setItem("kumiToken": res.data.sessionToken); Need to confirm
                     }
+                    login();
+                    window.location = "/dashboard";
                 }
             })
             .catch(err  => {
-                alert(err.response.data);
+                alert("Invalid user. Error");
             })
     }
 

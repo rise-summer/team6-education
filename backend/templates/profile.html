@@ -1,0 +1,71 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/profile.css">
+</head>
+
+<body>
+    <div class="profile-page">
+        <div class="page-header header-filter" data-parallax="true"
+            style="background-image:url('https://iili.io/ds4Ine.jpg');"></div>
+        <div class="main main-raised">
+            <div class="profile-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 ml-auto mr-auto">
+                            <div class="profile">
+                                <div class="avatar">
+                                    <img src="{{user['profilePhoto']}}" alt="Circle Image"
+                                        class="img-raised rounded-circle img-fluid">
+                                </div>
+                                <div class="name">
+                                    <a href="http://localhost:5000/editprofile">Edit Profile</a>
+                                    <h3 class="title">{{user['firstName']}} {{user['lastName']}}</h3>
+                                    <a href="tel:{{user['phoneNumber']}}"
+                                        class="btn btn-just-icon btn-link btn-phone"><i class="fa fa-phone"></i></a>
+                                    <a href="mailto: {{user['email']}}" class="btn btn-just-icon btn-link btn-email"><i
+                                            class="fa fa-envelope-o"></i></a>
+                                    <a href="//{{user['externalLink']}}" class="btn btn-just-icon btn-link btn-email"><i
+                                            class="fa fa-link"></i></a>
+                                    <h6>{{user['type']}}</h6>
+                                    <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, optio iusto earum
+                                        culpa unde quaerat! Asperiores ad a mollitia! Quibusdam ipsam necessitatibus
+                                        molestiae perferendis, quos reprehenderit illo omnis maiores voluptatibus.</h6>
+                                </div>
+                                <div style="height: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Pre-loader -->
+    <div style="width: 0; height: 0; overflow: hidden">
+        <img src="" width="1" height="1"> <img src="https://iili.io/JG4m8P.jpg" width="1" height="1">
+    </div>
+
+    <script>
+        document.getElementById("flagButton").addEventListener("click", displaySent);
+
+        function displaySent() {
+            console.log("1")
+            alert("Thank you for your feedback! An alert email has been sent.");
+        }
+
+
+    </script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+</body>

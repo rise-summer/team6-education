@@ -9,7 +9,6 @@ class Announcement(db.EmbeddedDocument):
 
 class Course(db.Document):
     """Modeling of a course object. 
-
     course_id:          integer
     title:              string
     year:               integer
@@ -42,13 +41,6 @@ class Course(db.Document):
 
 course_api = Blueprint("course_api", __name__)
 
-@course_api.route("/api/class", methods=["GET"])
-def get_courses():
-    """Get all courses."""
-    courses = [{"course_id": c["course_id"],
-        "title": c["title"]} for c in Course.objects()]
-    return jsonify(courses), 200
-
 @course_api.route("/api/class/<int:course_id>", methods=["GET"])
 def get_course(course_id):
     """Request for information of a course.
@@ -68,6 +60,7 @@ def get_course(course_id):
                         status=200)
     except Course.DoesNotExist:
         return Response("Class does not exist.", status=404)
+
 
 @course_api.route("/api/class/add", methods=["POST"])
 def add_course():
@@ -161,6 +154,7 @@ def update_course(course_id):
             "msg": "Successfully updated the course."}), 200
     except Course.DoesNotExist:
         return Response("Course does not exist.", status=404)
+
 
 @course_api.route("/api/class/<int:course_id>/announcement", methods=["GET"])
 def get_course_announcement(course_id):

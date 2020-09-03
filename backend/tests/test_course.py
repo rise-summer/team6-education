@@ -341,3 +341,4 @@ def test_drop_student(client):
     assert r.status_code == 404
     
     Course.objects().delete()
+   

@@ -8,7 +8,15 @@ from bson import json_util, ObjectId
 import json
 
 from flask import Flask, Response, request, jsonify, session, redirect, render_template
+
 from flask_mongoengine import MongoEngine
+import pymongo
+from bson import json_util, ObjectId
+import json
+from pymongo import MongoClient
+from flask_cors import CORS
+# print(sys.path)
+HOST_NAME = 'localhost'
 
 import pymongo
 from pymongo import MongoClient
@@ -16,6 +24,7 @@ from pymongo import MongoClient
 HOST_NAME = 'localhost'
 
 app = Flask(__name__)
+CORS(app)
 app.config['MONGODB_SETTINGS'] = {
     'host': '127.0.0.1',
     'db': 'kumi'

@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from './styles/theme'
 import { GlobalStyles } from './styles/global'
 import { ThemeContext } from './context/themeContext'
 import CourseData from './CourseData.json'
-import Login from './components/Login';
+import Login from './view/Login/LoginPage.js';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import Home from './components/Home';
 import PublicRoute from './components/Routes/PublicRoute';
